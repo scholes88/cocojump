@@ -27,7 +27,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::create("My Game");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC \
+        || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX \
+        || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        glview = GLViewImpl::createWithRect("Jump!", Rect(0,0,480,852));
+#else
+        glview = GLViewImpl::create("Jump!");
+#endif
         director->setOpenGLView(glview);
     }
 
